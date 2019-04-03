@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
@@ -14,6 +15,7 @@ server.use(helmet());
 server.use(express.json());
 server.use(cors());
 
+const secret = process.env.JWT_SECRET || 'there is no secret, it\'s all a lie';
 
 server.get('/', (req, res) => {
   res.send('I\'m ready to partayy!');
@@ -39,6 +41,19 @@ server.post('/api/register', (req, res) => {
         })
   }
 });
+
+const generateToken = (user) => {
+  const payload = {
+    subject: user.id,
+    username: user.username,
+    department: user.department,
+  };
+  const options = {
+    expiresIn: '1h'
+  };
+  const token = jwt.sign(payload, secret, options);
+  return token;
+};
 
 
 const port = 5000;
