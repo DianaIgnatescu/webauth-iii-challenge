@@ -55,6 +55,31 @@ const generateToken = (user) => {
   return token;
 };
 
+server.post('/api/login', (req, res) => {
+  const { username, password } = req.body;
+  const user = req.body;
+  if (!username || !password) {
+    res.status(400).json({ errorMessage: 'Missing username or password.' });
+  } else {
+    db('users')
+      .where({ username: user.username})
+      .first()
+      .then((user) => {
+        if (user && bcrypt.compareSync(password, user.password)) {
+          const token = generateToken(user);
+          res.status(200).json({
+            message: `Welcome ${user.username}!`, token,
+          });
+        } else {
+          res.status(401).json({ message: 'You shall not pass!'});
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({ errorMessage: 'Login unsuccessful' })
+      });
+  }
+});
+
 
 const port = 5000;
 server.listen(port, () => console.log(`\n*** Listening on http://localhost: ${port}! ***\n`));
