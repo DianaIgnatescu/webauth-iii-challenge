@@ -18,7 +18,7 @@ server.use(cors());
 const secret = process.env.JWT_SECRET || 'there is no secret, it\'s all a lie';
 
 server.get('/', (req, res) => {
-  res.send('I\'m ready to partayy!');
+  res.send('I\'m ready to party!');
 });
 
 server.post('/api/register', (req, res) => {
