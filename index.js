@@ -27,7 +27,7 @@ server.post('/api/register', (req, res) => {
   const hashedPw = bcrypt.hashSync(user.password, 12);
   user.password = hashedPw;
   if (!username || !password || !department) {
-    res.status(400).json({ errorMessage: 'Missing username, or password, or department.' })
+    res.status(400).json({ errorMessage: 'Missing username, password, or department.' })
   } else {
     db('users').insert(user)
       .then(arrayOfIds => {
@@ -75,7 +75,7 @@ server.post('/api/login', (req, res) => {
         }
       })
       .catch((error) => {
-        res.status(500).json({ errorMessage: 'Login unsuccessful' })
+        res.status(500).json({ errorMessage: 'Login unsuccessful.' })
       });
   }
 });
@@ -87,14 +87,14 @@ const restricted = (req, res, next) => {
     jwt.verify(token, secret, (error, decodedToken) => {
       if(error) {
         // record the event
-        res.status(401).json({ errorMessage: 'You are not authorized to touch this!!' })
+        res.status(401).json({ errorMessage: 'You are not authorized to access this content!' });
       } else {
         req.decodedJwt = decodedToken;
         next();
       }
     });
   } else {
-    res.status(401).json({ message: 'You shall not pass through here!!' });
+    res.status(401).json({ message: 'You shall not pass!' });
   }
 };
 
