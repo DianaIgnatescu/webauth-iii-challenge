@@ -80,6 +80,23 @@ server.post('/api/login', (req, res) => {
   }
 });
 
+const restricted = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (token) {
+    // is it valid?
+    jwt.verify(token, secret, (error, decodedToken) => {
+      if(error) {
+        // record the event
+        res.status(401).json({ errorMessage: 'You are not authorized to touch this!!' })
+      } else {
+        req.decodedJwt = decodedToken;
+        next();
+      }
+    });
+  } else {
+    res.status(401).json({ message: 'You shall not pass through here!!' });
+  }
+};
 
 const port = 5000;
 server.listen(port, () => console.log(`\n*** Listening on http://localhost: ${port}! ***\n`));
