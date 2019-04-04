@@ -28,6 +28,14 @@ class App extends Component {
       login: {...this.state.login, [name]: value}
     });
   };
+
+  handleRegisterChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      register: {...this.state.register, [name]: value }
+    });
+  };
+
   handleLogin = (event) => {
     event.preventDefault();
     axios
@@ -38,6 +46,18 @@ class App extends Component {
         })
         .catch((error) => console.log(error));
   };
+
+  handleRegister = (event) => {
+    event.preventDefault();
+    axios
+      .post('http://localhost:5000/api/register', this.state.register)
+      .then(response => {
+        localStorage.setItem('jwt', response.data.token);
+        this.props.history.push('/login');
+      })
+      .catch((error) => console.log(error));
+  };
+
   onLogout = () => {
     if (localStorage.getItem('jwt')) {
       localStorage.removeItem('jwt');
