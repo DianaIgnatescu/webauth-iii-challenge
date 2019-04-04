@@ -6,7 +6,40 @@ import Register from './components/Register';
 import Users from './components/Users';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: {
+        username: '',
+        password: '',
+      },
+      register: {
+        username: '',
+        password: '',
+        department: '',
+      },
+      users: [],
+      loggedIn: false,
+    }
+  };
+  handleLoginChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      login: {...this.state.login, [name]: value}
+    });
+  };
+  handleLogin = (event) => {
+    event.preventDefault();
+    axios
+      .post('http://localhost:5000/api/login', this.state.login)
+        .then(response => {
+          localStorage.setItem('jwt', response.data.token);
+          this.props.history.push('/');
+        })
+        .catch((error) => console.log(error));
+  };
   render() {
+    const { users, login, register, loggedIn } = this.state;
     return (
       <div className="App">
         <header className="App-header">
