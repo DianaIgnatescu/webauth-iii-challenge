@@ -38,6 +38,18 @@ class App extends Component {
         })
         .catch((error) => console.log(error));
   };
+  onLogout = () => {
+    if (localStorage.getItem('jwt')) {
+      localStorage.removeItem('jwt');
+      this.setState({
+        loggedIn: false
+      });
+      this.props.history.push('/login');
+    } else {
+      this.props.history.push('/');
+    }
+
+  };
   render() {
     const { users, login, register, loggedIn } = this.state;
     return (
