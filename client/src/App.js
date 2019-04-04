@@ -22,6 +22,27 @@ class App extends Component {
       loggedIn: false,
     }
   };
+
+  componentDidMount() {
+    const token = localStorage.getItem('jwt');
+    const reqOptions = {
+      headers: {
+        authorization: token
+      }
+    };
+
+    if (token) {
+      axios
+        .get('http://localhost:5000/api/users', reqOptions)
+        .then(response => {
+          this.setState({ loggedIn: true, users: response.data });
+        })
+        .catch(error => console.log(error));
+    } else {
+      this.props.history.push('/login');
+    }
+  };
+
   handleLoginChange = (event) => {
     const { name, value } = event.target;
     this.setState({
