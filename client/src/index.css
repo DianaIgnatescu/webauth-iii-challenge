@@ -6,9 +6,97 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #122C34;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+a {
+  color: #51BB9C;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+h2 {
+  color: #89d1bc;
+  padding: 20px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  width: 150px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.App {
+  max-width: 400px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  background: #173843;
+  border: none;
+  height: 40px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  padding-left: 15px;
+  color: #89d1bc;
+}
+
+input::placeholder {
+  color: #89d1bc;
+}
+
+button {
+  background: #51BB9C;
+  border: none;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #122C34;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button.logout {
+  padding: 0 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  border: 1px solid #265d6e;
+  text-align: left;
+  padding: 0 15px;
+  margin-bottom: 10px;
+}
+
+span {
+  font-weight: normal;
+  color: #89d1bc;
+  padding-right: 15px;
+  font-size: 16px;
+}
+
+p {
+  color: #51BB9C;
+  font-weight: bold;
 }
