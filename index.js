@@ -62,7 +62,7 @@ server.post('/api/login', (req, res) => {
     res.status(400).json({ errorMessage: 'Missing username or password.' });
   } else {
     db('users')
-      .where({ username: user.username})
+      .where({ username: user.username })
       .first()
       .then((user) => {
         if (user && bcrypt.compareSync(password, user.password)) {
@@ -100,12 +100,12 @@ const restricted = (req, res, next) => {
 
 server.get('/api/users', restricted, (req, res) => {
   db('users')
-      .then(users => {
-        res.status(200).json(users);
-      })
-      .catch((error) => {
-        res.status(500).json({ errorMessage: 'The users could not be retrieved.' });
-      });
+    .then(users => {
+      res.status(200).json(users);
+    })
+    .catch((error) => {
+      res.status(500).json({ errorMessage: 'The users could not be retrieved.' });
+    });
 });
 
 const port = 5000;
