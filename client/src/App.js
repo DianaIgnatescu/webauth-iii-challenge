@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, NavLink, withRouter } from 'react-router-dom';
+import axios from 'axios';
 import Login from './components/Login';
 import Register from './components/Register';
 import Users from './components/Users';
