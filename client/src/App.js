@@ -91,27 +91,52 @@ class App extends Component {
     }
 
   };
+
   render() {
     const { users, login, register, loggedIn } = this.state;
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {!loggedIn && !localStorage.getItem('jwt') ? (
+          <nav>
+            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/register">Register</NavLink>
+          </nav>
+
+        ) : (
+          <nav>
+            <NavLink to="/">Home</NavLink>
+            <button className="logout" type="submit" onClick={this.onLogout}>LOGOUT</button>
+          </nav>
+          )}
+
+        <main>
+          <Route path="/login" render={(props) =>
+            <Login
+              {...props}
+              login={login}
+              handleLoginChange={this.handleLoginChange}
+              handleLogin={this.handleLogin}
+            />}
+          />
+          <Route path="/register" render={(props) =>
+            <Register
+              {...props}
+              register={register}
+              handleRegisterChange={this.handleRegisterChange}
+              handleRegister={this.handleRegister}
+            />}
+          />
+          <Route exact path="/" render={(props) =>
+            <Users
+              {...props}
+              users={users}
+            />}
+          />
+        </main>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
